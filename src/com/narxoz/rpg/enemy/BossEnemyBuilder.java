@@ -11,22 +11,36 @@ public class BossEnemyBuilder implements EnemyBuilder {
     private int damage;
     private int defense;
     private int speed;
-    private List<Ability> abilities=new ArrayList<>();
+    private List<Ability> abilities = new ArrayList<>();
     private LootTable lootTable;
     private String ai;
-
     private int phase1, phase2, phase3;
 
     @Override
-    public EnemyBuilder setName(String name){ this.name=name; return this; }
+    public BossEnemyBuilder setName(String name) { this.name=name; return this; }
     @Override
-    public EnemyBuilder setHealth(int health){ this.health=health; return this; }
+    public BossEnemyBuilder setHealth(int health) { this.health=health; return this; }
     @Override
-    public EnemyBuilder setDamage(int damage){ this.damage=damage; return this; }
+    public BossEnemyBuilder setDamage(int damage) { this.damage=damage; return this; }
     @Override
-    public EnemyBuilder setDefense(int defense){ this.defense=defense; return this; }
+    public BossEnemyBuilder setDefense(int defense) { this.defense=defense; return this; }
     @Override
-    public EnemyBuilder setSpeed(int speed){ this.speed=speed; return this; }
+    public BossEnemyBuilder setSpeed(int speed) { this.speed=speed; return this; }
+    @Override
+    public BossEnemyBuilder setAbilities(List<Ability> abilities) {
+        this.abilities=abilities;
+        return this;
+    }
+
+    @Override
+    public BossEnemyBuilder setLootTable(LootTable lootTable) {
+        this.lootTable=lootTable;
+        return this;}
+
+    @Override
+    public BossEnemyBuilder setAI(String ai) {
+        this.ai=ai;
+        return this;}
 
     public BossEnemyBuilder addPhase(int phaseNumber, int threshold) {
         if (phaseNumber==1) this.phase1=threshold;
@@ -35,23 +49,9 @@ public class BossEnemyBuilder implements EnemyBuilder {
         return this;}
 
     @Override
-    public EnemyBuilder setAbilities(List<Ability> abilities) {
-        this.abilities=abilities;
-        return this;}
-    @Override
-    public EnemyBuilder setLootTable(LootTable lootTable) {
-        this.lootTable=lootTable;
-        return this;}
-    @Override
-    public EnemyBuilder setAI(String ai) {
-        this.ai=ai;
-        return this;}
-
-    @Override
     public Enemy build() {
-        if (name==null||health<=0){
-            throw new IllegalStateException("Enemy should have a valid name and health!");
-        }
+        if (name==null||health<=0) {
+            throw new IllegalStateException("Enemy should have a valid name and health!");}
         return new DragonBoss(name, health, damage, defense, speed, "FIRE",
                 abilities, phase1, phase2, phase3, lootTable, ai, true, true, 20);}
 }
